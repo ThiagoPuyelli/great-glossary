@@ -67,7 +67,7 @@ var registerUser = function (req, res) { return __awaiter(void 0, void 0, void 0
                 token = _c.sent();
                 res.json({
                     auth: true,
-                    token: token
+                    token: token + "|" + userSave._id
                 });
                 return [3 /*break*/, 4];
             case 3:
@@ -94,13 +94,14 @@ var loginUser = function (req, res) { return __awaiter(void 0, void 0, void 0, f
         switch (_b.label) {
             case 0:
                 _a = req.body, email = _a.email, password = _a.password;
-                if (!(email && password && email != "" && password != "")) return [3 /*break*/, 3];
-                userFind = User_1.default.findOne({ email: email });
+                if (!(email && password && email != "" && password != "")) return [3 /*break*/, 4];
+                return [4 /*yield*/, User_1.default.findOne({ email: email })];
+            case 1:
+                userFind = _b.sent();
                 if (!userFind)
                     return [2 /*return*/, res.json({ error: "El email no es válido" })];
-                console.log(userFind);
                 return [4 /*yield*/, comparePassword_1.default(password, userFind.password)];
-            case 1:
+            case 2:
                 comparePassword = _b.sent();
                 if (!comparePassword)
                     return [2 /*return*/, res.json({ error: "La contraseña no es válida" })];
@@ -108,20 +109,20 @@ var loginUser = function (req, res) { return __awaiter(void 0, void 0, void 0, f
                 return [4 /*yield*/, jsonwebtoken_1.default.sign({ id: userFind._id }, jwtPassword || "pepe", {
                         expiresIn: 24 * 24 * 60
                     })];
-            case 2:
+            case 3:
                 token = _b.sent();
                 res.json({
                     auth: true,
-                    token: token
+                    token: token + "|" + userFind._id
                 });
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 res.json({
                     auth: false,
                     error: "Error, los datos son inválidos"
                 });
-                _b.label = 4;
-            case 4: return [2 /*return*/];
+                _b.label = 5;
+            case 5: return [2 /*return*/];
         }
     });
 }); };

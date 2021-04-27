@@ -18,7 +18,7 @@ export var registerUser = async (req: Request, res: Response) => {
             });
             res.json({
                 auth: true,
-                token
+                token: token + "|" + userSave._id
             });
         } else {
             res.json({
@@ -37,11 +37,10 @@ export var registerUser = async (req: Request, res: Response) => {
 export var loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if(email && password && email != "" && password != ""){
-        const userFind: any = User.findOne({email});
+        const userFind: any = await User.findOne({email});
         
         if(!userFind) return res.json({error: "El email no es válido"})
         
-        console.log(userFind)
         const comparePassword = await comp(password, userFind.password);
         
         if(!comparePassword) return res.json({error: "La contraseña no es válida"})
@@ -53,7 +52,7 @@ export var loginUser = async (req: Request, res: Response) => {
 
         res.json({
             auth: true,
-            token
+            token: token + "|" + userFind._id
         })
         
     } else {
