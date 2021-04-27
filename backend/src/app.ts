@@ -1,11 +1,12 @@
 import morgan from "morgan";
 import express, {Request, Response, NextFunction} from "express";
+import userRoutes from "./routes/user.routes";
 
 export default (app: any) => {
     
     // PORT
 
-    app.set("port", process.env.PORT || 10000);
+    app.set("port", process.env.PORT || 11000);
 
     // SETTINGS
     
@@ -24,6 +25,8 @@ export default (app: any) => {
     });
 
     // ROUTES
+
+    app.use(userRoutes);
 
     // RETURN
 
