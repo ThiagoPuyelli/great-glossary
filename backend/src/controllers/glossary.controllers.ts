@@ -5,12 +5,7 @@ export var saveGlossary = async (req: Request, res: Response) => {
     const { title } = req.body;
 
     if(title && title != ""){
-
-        const token: string|string[]|undefined = req.headers["x-access-token"];
-        if(!token || typeof token != "string") return res.json({error: "El token no es válido"}); 
-        
-        const user: any = await User.findById(token.split("|")[1]);
-        if(!user) return res.json({error: "Error al encontrar el usuario"});
+        const { user } = req.body;
         
         if(user.glossaries.length > 0){
             for(let i of user.glossaries){
@@ -35,11 +30,63 @@ export var saveGlossary = async (req: Request, res: Response) => {
 }
 
 export var getGlossaries = async (req: Request, res: Response) => {
-    const token: string|string[]|undefined = req.headers["x-access-token"];
-    if(!token || typeof token != "string") return res.json({error: "Error el token es inválido"});
-    
-    const user: any = await User.findById(token.split("|")[1]);
-    if(!user) return res.json({error: "No se encuentra el usuario"});
+    const { user } = req.body;
 
     res.json(user.glossaries);
+}
+
+export var getGlossary = async (req: Request, res: Response) => {
+    const { user } = req.body;
+    if(user.glossaries.length < 1) return res.json({error: "Error, no hay glossarios"});
+    var glossary;
+
+    for(let i of user.glossaries){
+        if(i._id == req.params.id) glossary = i;
+    }
+
+    if(!glossary) return res.json({error: "Error, no existe el glosario"});
+    
+    return res.json(glossary);
+}
+
+export var deleteGlossary = async (req: Request, res: Response) => {
+    const { user } = req.body;
+    if(user.glossaries.length < 1) return res.json({error: "Error, no hay glossarios"});
+
+    var verify: boolean = false
+    for(let i in user.glossaries){
+        if(user.glossaries[i]._id == req.params.id) {
+            user.glossaries.splice(i, 1);
+            verify = true
+        };
+    }
+
+    if(!verify) return res.json({error: "Error, no existe el glosario"});
+
+    const userUpdate = await User.findByIdAndUpdate(user._id, user, {new: true});
+    if(!userUpdate) return res.json({error: "Error al modificar usuario"});
+    
+    return res.json("Glosario eliminado con éxito");
+
+}
+
+export var updateGlossary = async (req: Request, res: Response) => {
+    const { user, title } = req.body;
+
+    if(!title || title == "") return res.json({error: "El titulo no es válido"});
+
+    var verify: boolean = false;
+    for(let i in user.glossaries){
+        if(user.glossaries[i]._id == req.params.id){
+            user.glossaries[i].title = title;
+            verify = true;
+        }
+    }
+
+    if(!verify) return res.json({error: "No se encuentra el glosario"});
+
+    const userUpdate = await User.findByIdAndUpdate(user._id, user, {new: true});
+    if(!userUpdate) return res.json({error: "Error al modificar usuario"});
+
+    return res.json("Glosario modificado con éxito");
 }

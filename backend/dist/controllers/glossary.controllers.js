@@ -39,23 +39,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGlossaries = exports.saveGlossary = void 0;
+exports.updateGlossary = exports.deleteGlossary = exports.getGlossary = exports.getGlossaries = exports.saveGlossary = void 0;
 var User_1 = __importDefault(require("../models/User"));
 var saveGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var title, token, user, _i, _a, i, glossary, _b, _c;
+    var title, user, _i, _a, i, glossary, _b, _c;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
                 title = req.body.title;
-                if (!(title && title != "")) return [3 /*break*/, 3];
-                token = req.headers["x-access-token"];
-                if (!token || typeof token != "string")
-                    return [2 /*return*/, res.json({ error: "El token no es válido" })];
-                return [4 /*yield*/, User_1.default.findById(token.split("|")[1])];
-            case 1:
-                user = _d.sent();
-                if (!user)
-                    return [2 /*return*/, res.json({ error: "Error al encontrar el usuario" })];
+                if (!(title && title != "")) return [3 /*break*/, 2];
+                user = req.body.user;
                 if (user.glossaries.length > 0) {
                     for (_i = 0, _a = user.glossaries; _i < _a.length; _i++) {
                         i = _a[_i];
@@ -71,35 +64,97 @@ var saveGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0
                 user.glossaries.push(glossary);
                 _c = (_b = res).json;
                 return [4 /*yield*/, User_1.default.findByIdAndUpdate(user._id, user, { new: true })];
-            case 2:
+            case 1:
                 _c.apply(_b, [_d.sent()]);
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 3];
+            case 2:
                 res.json({
                     error: "Error, el titulo no es válido"
                 });
-                _d.label = 4;
-            case 4: return [2 /*return*/];
+                _d.label = 3;
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 exports.saveGlossary = saveGlossary;
 var getGlossaries = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var token, user;
+    var user;
     return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                token = req.headers["x-access-token"];
-                if (!token || typeof token != "string")
-                    return [2 /*return*/, res.json({ error: "Error el token es inválido" })];
-                return [4 /*yield*/, User_1.default.findById(token.split("|")[1])];
-            case 1:
-                user = _a.sent();
-                if (!user)
-                    return [2 /*return*/, res.json({ error: "No se encuentra el usuario" })];
-                res.json(user.glossaries);
-                return [2 /*return*/];
-        }
+        user = req.body.user;
+        res.json(user.glossaries);
+        return [2 /*return*/];
     });
 }); };
 exports.getGlossaries = getGlossaries;
+var getGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, glossary, _i, _a, i;
+    return __generator(this, function (_b) {
+        user = req.body.user;
+        if (user.glossaries.length < 1)
+            return [2 /*return*/, res.json({ error: "Error, no hay glossarios" })];
+        for (_i = 0, _a = user.glossaries; _i < _a.length; _i++) {
+            i = _a[_i];
+            if (i._id == req.params.id)
+                glossary = i;
+        }
+        if (!glossary)
+            return [2 /*return*/, res.json({ error: "Error, no existe el glosario" })];
+        return [2 /*return*/, res.json(glossary)];
+    });
+}); };
+exports.getGlossary = getGlossary;
+var deleteGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, verify, i, userUpdate;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                user = req.body.user;
+                if (user.glossaries.length < 1)
+                    return [2 /*return*/, res.json({ error: "Error, no hay glossarios" })];
+                verify = false;
+                for (i in user.glossaries) {
+                    if (user.glossaries[i]._id == req.params.id) {
+                        user.glossaries.splice(i, 1);
+                        verify = true;
+                    }
+                    ;
+                }
+                if (!verify)
+                    return [2 /*return*/, res.json({ error: "Error, no existe el glosario" })];
+                return [4 /*yield*/, User_1.default.findByIdAndUpdate(user._id, user, { new: true })];
+            case 1:
+                userUpdate = _a.sent();
+                if (!userUpdate)
+                    return [2 /*return*/, res.json({ error: "Error al modificar usuario" })];
+                return [2 /*return*/, res.json("Glosario eliminado con éxito")];
+        }
+    });
+}); };
+exports.deleteGlossary = deleteGlossary;
+var updateGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, user, title, verify, i, userUpdate;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, user = _a.user, title = _a.title;
+                if (!title || title == "")
+                    return [2 /*return*/, res.json({ error: "El titulo no es válido" })];
+                verify = false;
+                for (i in user.glossaries) {
+                    if (user.glossaries[i]._id == req.params.id) {
+                        user.glossaries[i].title = title;
+                        verify = true;
+                    }
+                }
+                if (!verify)
+                    return [2 /*return*/, res.json({ error: "No se encuentra el glosario" })];
+                return [4 /*yield*/, User_1.default.findByIdAndUpdate(user._id, user, { new: true })];
+            case 1:
+                userUpdate = _b.sent();
+                if (!userUpdate)
+                    return [2 /*return*/, res.json({ error: "Error al modificar usuario" })];
+                return [2 /*return*/, res.json("Glosario modificado con éxito")];
+        }
+    });
+}); };
+exports.updateGlossary = updateGlossary;

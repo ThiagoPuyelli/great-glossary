@@ -1,9 +1,13 @@
 import { Router } from "express";
 const router = Router();
-import { getGlossaries, saveGlossary } from "../controllers/glossary.controllers";
+import { deleteGlossary, getGlossary, getGlossaries, saveGlossary, updateGlossary } from "../controllers/glossary.controllers";
 import verifyToken from "../middlewares/verifyToken";
+import findUser from "../middlewares/findUser";
 
-router.post("/glossary", verifyToken, saveGlossary);
-router.get("/glossary", verifyToken, getGlossaries);
+router.post("/glossary", verifyToken, findUser, saveGlossary);
+router.get("/glossary", verifyToken, findUser, getGlossaries);
+router.get("/glossary/:id", verifyToken, findUser, getGlossary);
+router.delete("/glossary/:id", verifyToken, findUser, deleteGlossary);
+router.put("/glossary/:id", verifyToken, findUser, updateGlossary);
 
 export default router;

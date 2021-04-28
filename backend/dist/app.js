@@ -7,6 +7,7 @@ var morgan_1 = __importDefault(require("morgan"));
 var express_1 = __importDefault(require("express"));
 var user_routes_1 = __importDefault(require("./routes/user.routes"));
 var glossary_routes_1 = __importDefault(require("./routes/glossary.routes"));
+var word_routes_1 = __importDefault(require("./routes/word.routes"));
 exports.default = (function (app) {
     // PORT
     app.set("port", process.env.PORT || 11000);
@@ -25,6 +26,7 @@ exports.default = (function (app) {
     // ROUTES
     app.use(user_routes_1.default);
     app.use(glossary_routes_1.default);
+    app.use(word_routes_1.default);
     // RETURN
     return app;
 });

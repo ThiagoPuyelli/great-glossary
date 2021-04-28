@@ -7,7 +7,8 @@ const userSchema: Schema = new Schema({
         title: {type: String, required: true},
         words: [{
             word: {type: String, required: true},
-            letter: {type: String, minLength: 1, maxLength: 1}
+            letter: {type: String, minLength: 1, maxLength: 1},
+            definition: {type: String, required: true}
         }], default: []
     }], default: []}
 });

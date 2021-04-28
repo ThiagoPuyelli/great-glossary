@@ -2,6 +2,7 @@ import morgan from "morgan";
 import express, {Request, Response, NextFunction} from "express";
 import userRoutes from "./routes/user.routes";
 import glossaryRoutes from "./routes/glossary.routes";
+import wordRoutes from "./routes/word.routes";
 
 export default (app: any) => {
     
@@ -29,6 +30,7 @@ export default (app: any) => {
 
     app.use(userRoutes);
     app.use(glossaryRoutes);
+    app.use(wordRoutes);
 
     // RETURN
 
