@@ -1,0 +1,15 @@
+<div id="header">
+    <h1 id="logo" [routerLink]="['/']">
+        Great glossary 
+    </h1>
+    <div class="links">
+        <a class="link" [routerLink]="['/login']">
+            Sign in
+        </a>
+        <a class="link" [routerLink]="['/register']">
+            Sign Up
+        </a>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

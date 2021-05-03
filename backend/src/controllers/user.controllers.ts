@@ -7,6 +7,11 @@ import jwt from "jsonwebtoken";
 export var registerUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if(email && password && email != "" && password != ""){
+        const userEmail = await User.findOne({email});
+        if(userEmail) return res.json({
+            auth: false,
+            error: "El mail ya existe"
+        })
         const user: any = new User();
         user.email = email;
         user.password = await encp(password);

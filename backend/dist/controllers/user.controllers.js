@@ -45,45 +45,53 @@ var encryptPassword_1 = __importDefault(require("../methods/encryptPassword"));
 var comparePassword_1 = __importDefault(require("../methods/comparePassword"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var registerUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, user, _b, userSave, jwtPassword, token;
+    var _a, email, password, userEmail, user, _b, userSave, jwtPassword, token;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
                 _a = req.body, email = _a.email, password = _a.password;
-                if (!(email && password && email != "" && password != "")) return [3 /*break*/, 5];
+                if (!(email && password && email != "" && password != "")) return [3 /*break*/, 6];
+                return [4 /*yield*/, User_1.default.findOne({ email: email })];
+            case 1:
+                userEmail = _c.sent();
+                if (userEmail)
+                    return [2 /*return*/, res.json({
+                            auth: false,
+                            error: "El mail ya existe"
+                        })];
                 user = new User_1.default();
                 user.email = email;
                 _b = user;
                 return [4 /*yield*/, encryptPassword_1.default(password)];
-            case 1:
+            case 2:
                 _b.password = _c.sent();
                 userSave = user.save();
-                if (!userSave) return [3 /*break*/, 3];
+                if (!userSave) return [3 /*break*/, 4];
                 jwtPassword = process.env.JWT_PASSWORD;
                 return [4 /*yield*/, jsonwebtoken_1.default.sign({ id: user._id }, jwtPassword || "pepe", {
                         expiresIn: 24 * 24 * 60
                     })];
-            case 2:
+            case 3:
                 token = _c.sent();
                 res.json({
                     auth: true,
                     token: token + "|" + userSave._id
                 });
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 res.json({
                     auth: false,
                     error: "Error al guardar usuario"
                 });
-                _c.label = 4;
-            case 4: return [3 /*break*/, 6];
-            case 5:
+                _c.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
                 res.json({
                     auth: false,
                     error: "Error, los datos son inválidos"
                 });
-                _c.label = 6;
-            case 6: return [2 /*return*/];
+                _c.label = 7;
+            case 7: return [2 /*return*/];
         }
     });
 }); };

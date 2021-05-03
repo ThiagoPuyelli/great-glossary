@@ -1,0 +1,26 @@
+#titleWelcome {
+    font-family: coming;
+    margin-top: 20px;
+    font-size: 40px;
+}
+
+#subtitleWelcome {
+    margin: 20px;
+}
+
+.linkWelcome {
+    display: block;
+    margin: 40px;
+    padding: 20px;
+    width: 65%;
+    text-align: center;
+    box-shadow: 0px 0px 4px #ccc;
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+    transition: 300ms all;
+}
+
+.linkWelcome:hover{
+    background-color: #eee;
+}

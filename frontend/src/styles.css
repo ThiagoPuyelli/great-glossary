@@ -1,0 +1,76 @@
+@font-face {
+    src: url("./assets/fonts/ComingSoon-Regular.ttf");
+    font-family: coming;
+}
+
+@font-face {
+    src: url("./assets/fonts/BalooDa2-Regular.ttf");
+    font-family: baloo;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: baloo;
+}
+
+.content {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    padding: 20px;
+}
+
+:root {
+    --blue: #26547C;
+    --pink: #EF476F;
+    --yellow: #FFD166;
+    --green: #06D6A0;
+    --white: #FFFCF9
+}
+
+.form {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 100%;
+}
+
+.label {
+    display: block;
+    font-size: 20px;
+    width: 270px;
+    border-bottom: 2px solid var(--yellow);
+    text-align: center; 
+}
+
+.inputText {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-shadow: #ccc;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.msgError {
+    display: none;
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.submit {
+    width: 270px;
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 300ms all;
+}

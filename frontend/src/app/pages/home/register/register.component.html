@@ -1,0 +1,12 @@
+<div class="content">
+    <h1 class="titleForm">Register</h1>
+    <form class="form" [formGroup]="dataForm" (submit)="submitForm()">
+        <label class="label">Email</label>
+        <input type="email" class="inputText" placeholder="Email" formControlName="email">
+        <label class="label">Password</label>
+        <input type="password" (change)="verifyLength()" class="inputText" placeholder="Password" formControlName="password">
+        <span class="msgError password">Minimum 6 characters required</span>
+        <span class="msgError text">Email or Password is failed</span>
+        <button type="submit" class="submit">Submit</button>
+    </form>
+</div>
