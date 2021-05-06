@@ -21,7 +21,10 @@ export var saveGlossary = async (req: Request, res: Response) => {
         };
 
         user.glossaries.push(glossary);
-        res.json(await User.findByIdAndUpdate(user._id, user, {new: true}));
+        const userUpdate = await User.findByIdAndUpdate(user._id, user, {new: true});
+        if(!userUpdate) res.json({error: "Error al modificar usuario"})
+
+        res.json(glossary);
     } else {
         res.json({
             error: "Error, el titulo no es válido"
@@ -36,7 +39,7 @@ export var getGlossaries = async (req: Request, res: Response) => {
 }
 
 export var getGlossary = async (req: Request, res: Response) => {
-    const { user } = req.body;
+    const { user, letter } = req.body;
     if(user.glossaries.length < 1) return res.json({error: "Error, no hay glossarios"});
     var glossary;
 
@@ -46,6 +49,14 @@ export var getGlossary = async (req: Request, res: Response) => {
 
     if(!glossary) return res.json({error: "Error, no existe el glosario"});
     
+    var words: Array<any> = [];
+    for(let i of glossary.words){
+        if(i.letter == letter){
+            words = i;
+        }
+    }
+    glossary.words = words;
+
     return res.json(glossary);
 }
 

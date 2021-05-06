@@ -1,0 +1,11 @@
+<div class="content" *ngIf="glossary && letter != ''">
+    <h1>{{glossary.title}}</h1>
+    <h3>{{letter}}</h3>
+    <div id="letters">
+        <p *ngFor="let i of letters" class="letter" [routerLink]="['/auth/glossary/' + glossary._id + '/' + i]" routerLinkActive="letterActive">{{i}}</p>
+    </div>
+    <div id="definitions">
+        <h1 *ngIf="glossary.words.length == 0">Don't have words in the letter, <br> you can add a definition</h1>
+    </div>
+    <button class="submit">+</button>
+</div>

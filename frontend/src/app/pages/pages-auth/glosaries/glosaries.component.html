@@ -1,0 +1,15 @@
+<div class="content">
+    <h1 id="title">Glossaries</h1>
+    
+    <h1 id="noGlossaries" *ngIf="glossaries.length == 0">
+        You don't have glossaries, you can press the button for create a new glossary
+    </h1>
+    
+    <div id="glossaries" *ngIf="glossaries.length > 0">
+        <div class="glossary" *ngFor="let i of glossaries" [routerLink]="['/auth/glossary/' + i._id + '/a']">
+            <p>{{i.title}}</p>
+        </div>
+    </div>
+
+    <button id="create" class="submit" [routerLink]="['/auth/save-glossary']">+</button>
+</div>

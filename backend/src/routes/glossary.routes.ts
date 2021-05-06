@@ -6,7 +6,7 @@ import findUser from "../middlewares/findUser";
 
 router.post("/glossary", verifyToken, findUser, saveGlossary);
 router.get("/glossary", verifyToken, findUser, getGlossaries);
-router.get("/glossary/:id", verifyToken, findUser, getGlossary);
+router.get("/glossary/:id/:letter", verifyToken, findUser, getGlossary);
 router.delete("/glossary/:id", verifyToken, findUser, deleteGlossary);
 router.put("/glossary/:id", verifyToken, findUser, updateGlossary);
 

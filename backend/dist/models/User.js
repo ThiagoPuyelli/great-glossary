@@ -6,11 +6,11 @@ var userSchema = new mongoose_1.Schema({
     password: { type: String, required: true },
     glossaries: { type: [{
                 title: { type: String, required: true },
-                words: [{
-                        word: { type: String, required: true },
-                        letter: { type: String, minLength: 1, maxLength: 1 },
-                        definition: { type: String, required: true }
-                    }], default: []
+                words: { type: [{
+                            word: { type: String, required: true },
+                            letter: { type: String, minLength: 1, maxLength: 1 },
+                            definition: { type: String, required: true }
+                        }], default: [] }
             }], default: [] }
 });
 exports.default = mongoose_1.model("User", userSchema);

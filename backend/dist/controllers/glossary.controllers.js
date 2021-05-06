@@ -42,9 +42,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateGlossary = exports.deleteGlossary = exports.getGlossary = exports.getGlossaries = exports.saveGlossary = void 0;
 var User_1 = __importDefault(require("../models/User"));
 var saveGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var title, user, _i, _a, i, glossary, _b, _c;
-    return __generator(this, function (_d) {
-        switch (_d.label) {
+    var title, user, _i, _a, i, glossary, userUpdate;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 title = req.body.title;
                 if (!(title && title != "")) return [3 /*break*/, 2];
@@ -62,16 +62,18 @@ var saveGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0
                     words: []
                 };
                 user.glossaries.push(glossary);
-                _c = (_b = res).json;
                 return [4 /*yield*/, User_1.default.findByIdAndUpdate(user._id, user, { new: true })];
             case 1:
-                _c.apply(_b, [_d.sent()]);
+                userUpdate = _b.sent();
+                if (!userUpdate)
+                    res.json({ error: "Error al modificar usuario" });
+                res.json(glossary);
                 return [3 /*break*/, 3];
             case 2:
                 res.json({
                     error: "Error, el titulo no es válido"
                 });
-                _d.label = 3;
+                _b.label = 3;
             case 3: return [2 /*return*/];
         }
     });
@@ -87,18 +89,26 @@ var getGlossaries = function (req, res) { return __awaiter(void 0, void 0, void 
 }); };
 exports.getGlossaries = getGlossaries;
 var getGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, glossary, _i, _a, i;
-    return __generator(this, function (_b) {
-        user = req.body.user;
+    var _a, user, letter, glossary, _i, _b, i, words, _c, _d, i;
+    return __generator(this, function (_e) {
+        _a = req.body, user = _a.user, letter = _a.letter;
         if (user.glossaries.length < 1)
             return [2 /*return*/, res.json({ error: "Error, no hay glossarios" })];
-        for (_i = 0, _a = user.glossaries; _i < _a.length; _i++) {
-            i = _a[_i];
+        for (_i = 0, _b = user.glossaries; _i < _b.length; _i++) {
+            i = _b[_i];
             if (i._id == req.params.id)
                 glossary = i;
         }
         if (!glossary)
             return [2 /*return*/, res.json({ error: "Error, no existe el glosario" })];
+        words = [];
+        for (_c = 0, _d = glossary.words; _c < _d.length; _c++) {
+            i = _d[_c];
+            if (i.letter == letter) {
+                words = i;
+            }
+        }
+        glossary.words = words;
         return [2 /*return*/, res.json(glossary)];
     });
 }); };

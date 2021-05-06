@@ -5,11 +5,11 @@ const userSchema: Schema = new Schema({
     password: {type: String, required: true},
     glossaries:{type: [{
         title: {type: String, required: true},
-        words: [{
+        words: {type: [{
             word: {type: String, required: true},
             letter: {type: String, minLength: 1, maxLength: 1},
             definition: {type: String, required: true}
-        }], default: []
+        }], default: []}
     }], default: []}
 });
 

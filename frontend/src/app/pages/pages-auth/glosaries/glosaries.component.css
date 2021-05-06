@@ -1,0 +1,42 @@
+#title {
+    font-size: 40px;
+    font-family: coming;
+}
+
+#noGlossaries {
+    margin-top: 40px;
+}
+
+.glossary {
+    padding: 20px;
+    margin: 20px;
+    width: 300px;  
+    background-color: #eee;
+    border-radius: 20px;
+    box-shadow: 0px 0px 4px #ccc;
+    cursor: pointer;
+    transition: 300ms all;
+}
+
+.glossary:hover {
+    background-color: #ccc;
+}
+
+.glossary p {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-family: coming;
+    letter-spacing: 1px;
+}
+
+#create {
+    font-size: 30px; 
+    color: black;
+    box-shadow: 0px 0px 4px #ccc;
+    margin-top: 20px;
+}
+
+#create:hover{
+    background-color: #ccc;
+}

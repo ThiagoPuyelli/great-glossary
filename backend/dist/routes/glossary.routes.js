@@ -10,7 +10,7 @@ var verifyToken_1 = __importDefault(require("../middlewares/verifyToken"));
 var findUser_1 = __importDefault(require("../middlewares/findUser"));
 router.post("/glossary", verifyToken_1.default, findUser_1.default, glossary_controllers_1.saveGlossary);
 router.get("/glossary", verifyToken_1.default, findUser_1.default, glossary_controllers_1.getGlossaries);
-router.get("/glossary/:id", verifyToken_1.default, findUser_1.default, glossary_controllers_1.getGlossary);
+router.get("/glossary/:id/:letter", verifyToken_1.default, findUser_1.default, glossary_controllers_1.getGlossary);
 router.delete("/glossary/:id", verifyToken_1.default, findUser_1.default, glossary_controllers_1.deleteGlossary);
 router.put("/glossary/:id", verifyToken_1.default, findUser_1.default, glossary_controllers_1.updateGlossary);
 exports.default = router;
