@@ -39,7 +39,8 @@ export var getGlossaries = async (req: Request, res: Response) => {
 }
 
 export var getGlossary = async (req: Request, res: Response) => {
-    const { user, letter } = req.body;
+    const { user } = req.body;
+    const { letter } = req.params;
     if(user.glossaries.length < 1) return res.json({error: "Error, no hay glossarios"});
     var glossary;
 
@@ -51,8 +52,8 @@ export var getGlossary = async (req: Request, res: Response) => {
     
     var words: Array<any> = [];
     for(let i of glossary.words){
-        if(i.letter == letter){
-            words = i;
+        if(i.letter == letter.toUpperCase()){
+            words.push(i);
         }
     }
     glossary.words = words;

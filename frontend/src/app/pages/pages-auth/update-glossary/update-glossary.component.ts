@@ -1,21 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { GlosariesService } from "../../../services/glosaries.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-save-glossary',
-  templateUrl: './save-glossary.component.html',
-  styleUrls: ['./save-glossary.component.css']
+  selector: 'app-update-glossary',
+  templateUrl: './update-glossary.component.html',
+  styleUrls: ['./update-glossary.component.css']
 })
+export class UpdateGlossaryComponent implements OnInit {
 
-export class SaveGlossaryComponent implements OnInit {
+  private glossaryID: string = "";
 
   constructor(
     private glossService: GlosariesService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(
+      result => {
+        const input: HTMLElement|null = document.querySelector(".inputText");
+        if(input && result.title) input.setAttribute("value", result.title);
+        if(result.id) this.glossaryID = result.id;
+      }
+    )
   }
 
   submitGlossary(){
@@ -23,7 +32,7 @@ export class SaveGlossaryComponent implements OnInit {
     const titleValue: any = document.querySelector("#titleInput");
     const span: HTMLElement|null = document.querySelector(".msgError");
     if(titleValue && titleValue.value != ""){
-      this.glossService.saveGlossary(titleValue.value).subscribe(
+      this.glossService.updateGlossary(titleValue.value, this.glossaryID).subscribe(
         (res: any) => {
           if(res.error){
             if(span) span.style.display = "block";
@@ -37,5 +46,6 @@ export class SaveGlossaryComponent implements OnInit {
       if(span) span.style.display = "block";
     }
   }
+
 
 }

@@ -4,11 +4,11 @@ import { WordsService } from "../../../services/words.service";
 import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-save-word',
-  templateUrl: './save-word.component.html',
-  styleUrls: ['./save-word.component.css']
+  selector: 'app-update-word',
+  templateUrl: './update-word.component.html',
+  styleUrls: ['./update-word.component.css']
 })
-export class SaveWordComponent implements OnInit {
+export class UpdateWordComponent implements OnInit {
 
   public dataForm: FormGroup = this.builder.group({
     word: ["", Validators.required],
@@ -16,6 +16,8 @@ export class SaveWordComponent implements OnInit {
   });
 
   private glossaryID: string = "";
+  private wordID: string = "";
+  private word: any;
 
   constructor(
     private builder: FormBuilder,
@@ -26,16 +28,31 @@ export class SaveWordComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(
-      params => this.glossaryID = params.id,
+      params => {
+        this.glossaryID = params.id;
+        this.wordID = params.wordID;
+        this.woService.getWord(this.glossaryID, this.wordID).subscribe(
+          word => {
+            this.word = word;
+            this.setInputs();
+          },
+          err => console.log(err)
+        )
+      },
       err => console.log(err)
     )
+  }
+
+  setInputs(){
+    this.dataForm.get("word")?.setValue(this.word.word);
+    this.dataForm.get("definition")?.setValue(this.word.definition);
   }
 
   submitForm(){
     const span: HTMLElement|null = document.querySelector(".msgError");
     if(this.dataForm.status == "VALID"){
       const { word, definition } = this.dataForm.value;
-      this.woService.saveWord(this.glossaryID, {word, definition}).subscribe(
+      this.woService.updateWord(this.glossaryID, this.wordID, {word, definition}).subscribe(
         (res: any) => {
           if(res.error){
             if(span) span.style.display = "block";

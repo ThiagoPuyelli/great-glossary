@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteWord = exports.getWord = exports.saveWord = void 0;
+exports.updateWord = exports.deleteWord = exports.getWord = exports.saveWord = void 0;
 var User_1 = __importDefault(require("../models/User"));
 var saveWord = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, word, definition, user, glossaryIndex, wordData, userUpdate;
@@ -100,9 +100,35 @@ var deleteWord = function (req, res) { return __awaiter(void 0, void 0, void 0, 
             case 1:
                 userUpdate = _b.sent();
                 if (!userUpdate)
-                    return [2 /*return*/, res.json({ error: "No se pudo modificar el usuario" })];
+                    return [2 /*return*/, res.json({ error: "No se pudo eliminar la palabra" })];
                 return [2 /*return*/, res.json("Palabra eliminada con éxito")];
         }
     });
 }); };
 exports.deleteWord = deleteWord;
+var updateWord = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, user, glossaryIndex, word, definition, verify, i, userUpdate;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, user = _a.user, glossaryIndex = _a.glossaryIndex, word = _a.word, definition = _a.definition;
+                verify = false;
+                for (i in user.glossaries[glossaryIndex].words) {
+                    if (user.glossaries[glossaryIndex].words[i]._id == req.params.wordID) {
+                        user.glossaries[glossaryIndex].words[i].word = word;
+                        user.glossaries[glossaryIndex].words[i].definition = definition;
+                        verify = true;
+                    }
+                }
+                if (!verify)
+                    return [2 /*return*/, res.json({ error: "No se encontro la palabra para modificarla" })];
+                return [4 /*yield*/, User_1.default.findByIdAndUpdate(user._id, user)];
+            case 1:
+                userUpdate = _b.sent();
+                if (!userUpdate)
+                    return [2 /*return*/, res.json({ error: "No se pudo modificar la palabra" })];
+                return [2 /*return*/, res.json("Palabra modificada con éxito")];
+        }
+    });
+}); };
+exports.updateWord = updateWord;

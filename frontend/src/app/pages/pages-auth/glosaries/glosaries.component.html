@@ -6,8 +6,12 @@
     </h1>
     
     <div id="glossaries" *ngIf="glossaries.length > 0">
-        <div class="glossary" *ngFor="let i of glossaries" [routerLink]="['/auth/glossary/' + i._id + '/a']">
-            <p>{{i.title}}</p>
+        <div class="glossaryDiv" *ngFor="let i of glossaries">
+            <div class="glossary" [routerLink]="['/auth/glossary/' + i._id + '/a']">
+                <p>{{i.title}}</p>
+            </div>
+            <button class="buttonModify delete" (click)="deleteGlossary(i._id)">X</button>
+            <button class="buttonModify update" [routerLink]="['/auth/update-glossary/' + i._id + '/' + i.title]">U</button>
         </div>
     </div>
 

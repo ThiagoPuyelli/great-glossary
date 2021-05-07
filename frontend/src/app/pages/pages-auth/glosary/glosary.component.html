@@ -6,6 +6,16 @@
     </div>
     <div id="definitions">
         <h1 *ngIf="glossary.words.length == 0">Don't have words in the letter, <br> you can add a definition</h1>
+        <div id="words" *ngIf="glossary.words.length > 0">
+            <div class="word" *ngFor="let u of glossary.words">
+                <p>
+                    <b>{{u.word}}:</b> 
+                    {{u.definition}}
+                    <button class="buttonModify delete" (click)="deleteWord(u._id)">X</button> 
+                    <button class="buttonModify update" [routerLink]="['/auth/update-word/' + glossary._id + '/' + u._id]">U</button>
+                </p>
+            </div>
+        </div>
+        <button class="submit" [routerLink]="['/auth/save-word/' + glossary._id]">+</button>
     </div>
-    <button class="submit">+</button>
 </div>

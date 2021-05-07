@@ -32,6 +32,16 @@ export class GlosariesService {
         }
     }
 
+    updateGlossary(title: string, id: string){
+        const token: string|null = sessionStorage.getItem("x-access-token");
+        if(token){
+            const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
+            return this.http.put(environment.uri + "/glossary/" + id, {title}, {headers});
+        } else {
+            return this.http.put(environment.uri + "/glossary/" + id, {title});
+        }
+    }
+
     getGlossary(id: string, letter: string){
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
@@ -41,4 +51,15 @@ export class GlosariesService {
             return this.http.get(environment.uri + "/glossary/" + id + "/" + letter);
         }
     }
+
+    deleteGlossary(id: string){
+        const token: string|null = sessionStorage.getItem("x-access-token");
+        if(token){
+            const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
+            return this.http.delete(environment.uri + "/glossary/" + id, {headers});
+        } else {
+            return this.http.delete(environment.uri + "/glossary/" + id);
+        }
+    }
+
 }

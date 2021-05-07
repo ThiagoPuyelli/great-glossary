@@ -26,4 +26,11 @@ export class GlosariesComponent implements OnInit {
     )
   }
 
+  deleteGlossary(id: string){
+    this.glosariesService.deleteGlossary(id).subscribe(
+      res => location.reload(),
+      err => console.log(err)
+    )
+  }
+
 }

@@ -89,23 +89,24 @@ var getGlossaries = function (req, res) { return __awaiter(void 0, void 0, void 
 }); };
 exports.getGlossaries = getGlossaries;
 var getGlossary = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, user, letter, glossary, _i, _b, i, words, _c, _d, i;
-    return __generator(this, function (_e) {
-        _a = req.body, user = _a.user, letter = _a.letter;
+    var user, letter, glossary, _i, _a, i, words, _b, _c, i;
+    return __generator(this, function (_d) {
+        user = req.body.user;
+        letter = req.params.letter;
         if (user.glossaries.length < 1)
             return [2 /*return*/, res.json({ error: "Error, no hay glossarios" })];
-        for (_i = 0, _b = user.glossaries; _i < _b.length; _i++) {
-            i = _b[_i];
+        for (_i = 0, _a = user.glossaries; _i < _a.length; _i++) {
+            i = _a[_i];
             if (i._id == req.params.id)
                 glossary = i;
         }
         if (!glossary)
             return [2 /*return*/, res.json({ error: "Error, no existe el glosario" })];
         words = [];
-        for (_c = 0, _d = glossary.words; _c < _d.length; _c++) {
-            i = _d[_c];
-            if (i.letter == letter) {
-                words = i;
+        for (_b = 0, _c = glossary.words; _b < _c.length; _b++) {
+            i = _c[_b];
+            if (i.letter == letter.toUpperCase()) {
+                words.push(i);
             }
         }
         glossary.words = words;

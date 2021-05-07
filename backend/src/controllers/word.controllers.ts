@@ -48,7 +48,28 @@ export var deleteWord = async (req: Request, res: Response) => {
 
     const userUpdate = await User.findByIdAndUpdate(user._id, user);
 
-    if(!userUpdate) return res.json({error: "No se pudo modificar el usuario"}); 
+    if(!userUpdate) return res.json({error: "No se pudo eliminar la palabra"}); 
 
     return res.json("Palabra eliminada con éxito")
+}
+
+export var updateWord = async (req: Request, res: Response) => {
+    const { user, glossaryIndex, word, definition } = req.body;
+
+    var verify: boolean = false;
+    for(let i in user.glossaries[glossaryIndex].words){
+        if(user.glossaries[glossaryIndex].words[i]._id == req.params.wordID){
+            user.glossaries[glossaryIndex].words[i].word = word;
+            user.glossaries[glossaryIndex].words[i].definition = definition;
+            verify = true;
+        }
+    }
+
+    if(!verify) return res.json({error: "No se encontro la palabra para modificarla"});
+
+    const userUpdate = await User.findByIdAndUpdate(user._id, user);
+
+    if(!userUpdate) return res.json({error: "No se pudo modificar la palabra"}); 
+
+    return res.json("Palabra modificada con éxito");
 }

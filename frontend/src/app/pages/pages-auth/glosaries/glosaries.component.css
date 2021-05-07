@@ -7,6 +7,41 @@
     margin-top: 40px;
 }
 
+.glossaryDiv {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.buttonModify {
+    margin-right: 20px;
+    height: 70px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    color: white;
+    transition: 300ms all;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.buttonModify.delete {
+    background-color: rgb(219, 29, 29);
+}
+
+.buttonModify.delete:hover {
+    background-color: rgb(165, 15, 15);
+}
+
+.buttonModify.update {
+    background-color: var(--blue);
+}
+
+.buttonModify.update:hover {
+    background-color: #0a3e6b;
+}
+
 .glossary {
     padding: 20px;
     margin: 20px;

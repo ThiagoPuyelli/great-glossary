@@ -1,0 +1,20 @@
+.content {
+    padding: 60px;
+}
+
+form * {
+    margin: 20px;
+}
+
+.inputText {
+    font-size: 17px;
+}
+
+.submit {
+    background-color: var(--green);
+    box-shadow: 0px 0px 4px var(--green);
+}
+
+.submit:hover {
+    background-color: #06a87d;
+}

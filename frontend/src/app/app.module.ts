@@ -14,6 +14,8 @@ import { GlosariesComponent } from './pages/pages-auth/glosaries/glosaries.compo
 import { GlosaryComponent } from './pages/pages-auth/glosary/glosary.component';
 import { SaveGlossaryComponent } from './pages/pages-auth/save-glossary/save-glossary.component';
 import { SaveWordComponent } from './pages/pages-auth/save-word/save-word.component';
+import { UpdateGlossaryComponent } from './pages/pages-auth/update-glossary/update-glossary.component';
+import { UpdateWordComponent } from './pages/pages-auth/update-word/update-word.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { SaveWordComponent } from './pages/pages-auth/save-word/save-word.compon
     GlosariesComponent,
     GlosaryComponent,
     SaveGlossaryComponent,
-    SaveWordComponent
+    SaveWordComponent,
+    UpdateGlossaryComponent,
+    UpdateWordComponent
   ],
   imports: [
     BrowserModule,

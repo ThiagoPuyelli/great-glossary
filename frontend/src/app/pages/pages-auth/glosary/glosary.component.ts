@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { GlosariesService } from "../../../services/glosaries.service";
+import { WordsService } from "../../../services/words.service";
 
 @Component({
   selector: 'app-glosary',
@@ -15,7 +16,8 @@ export class GlosaryComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private glossService: GlosariesService
+    private glossService: GlosariesService,
+    private wordsService: WordsService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,13 @@ export class GlosaryComponent implements OnInit {
   addLetters(){
     var lettersString: string = "abcdefghijklmnñopqrstuvwxyz";
     this.letters = lettersString.split("");
+  }
+
+  deleteWord(wordID: string){
+    this.wordsService.deleteWord(this.glossary._id, wordID).subscribe(
+      res => location.reload(),
+      err => console.log(err)
+    )
   }
 
 }
