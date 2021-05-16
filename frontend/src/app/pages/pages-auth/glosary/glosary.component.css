@@ -76,7 +76,7 @@ h3{
 }
 
 #words {
-    width: 85%;
+    width: 65%;
     margin: 0 auto;
     margin-top: 20px;
     padding: 20px;
@@ -103,4 +103,16 @@ h3{
 
 .submit:hover {
     background-color: #ccc;
+}
+
+@media (max-width: 536px) {
+    #noWords {
+        font-size: 25px;
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+
+    .submit {
+        width: 200px;
+    }
 }

@@ -15,7 +15,7 @@ export var registerUser = async (req: Request, res: Response) => {
         const user: any = new User();
         user.email = email;
         user.password = await encp(password);
-        const userSave = user.save();
+        const userSave = await user.save();
         if(userSave){
             const jwtPassword: undefined|string = process.env.JWT_PASSWORD;
             const token = await jwt.sign({id: user._id}, jwtPassword || "pepe", {

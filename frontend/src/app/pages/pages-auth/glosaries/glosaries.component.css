@@ -75,3 +75,18 @@
 #create:hover{
     background-color: #ccc;
 }
+
+@media (max-width: 576px) {
+    .glossary {
+        width: 180px;
+    }
+}
+
+@media (max-width: 444px) {
+    .glossary {
+        width: 100%;
+    }
+    .buttonModify {
+        margin: 0 auto;
+    }
+}

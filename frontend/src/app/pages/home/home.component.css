@@ -38,3 +38,9 @@
     font-weight: bold;
     transform: scale(1.2, 1.2);
 }
+
+@media (max-width: 402px) {
+    #header {
+        flex-flow: column wrap;
+    }
+}

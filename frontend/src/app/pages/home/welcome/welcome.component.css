@@ -2,6 +2,7 @@
     font-family: coming;
     margin-top: 20px;
     font-size: 40px;
+    text-align: center;
 }
 
 #subtitleWelcome {
@@ -23,4 +24,14 @@
 
 .linkWelcome:hover{
     background-color: #eee;
+}
+
+@media (max-width: 540px) {
+    #titleWelcome {
+        font-size: 30px;
+    }
+    .linkWelcome {
+        margin: 0px;
+        margin-top: 20px;
+    }
 }

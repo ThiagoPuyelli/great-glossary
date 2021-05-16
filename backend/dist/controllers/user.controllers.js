@@ -50,7 +50,7 @@ var registerUser = function (req, res) { return __awaiter(void 0, void 0, void 0
         switch (_c.label) {
             case 0:
                 _a = req.body, email = _a.email, password = _a.password;
-                if (!(email && password && email != "" && password != "")) return [3 /*break*/, 6];
+                if (!(email && password && email != "" && password != "")) return [3 /*break*/, 7];
                 return [4 /*yield*/, User_1.default.findOne({ email: email })];
             case 1:
                 userEmail = _c.sent();
@@ -65,33 +65,35 @@ var registerUser = function (req, res) { return __awaiter(void 0, void 0, void 0
                 return [4 /*yield*/, encryptPassword_1.default(password)];
             case 2:
                 _b.password = _c.sent();
-                userSave = user.save();
-                if (!userSave) return [3 /*break*/, 4];
+                return [4 /*yield*/, user.save()];
+            case 3:
+                userSave = _c.sent();
+                if (!userSave) return [3 /*break*/, 5];
                 jwtPassword = process.env.JWT_PASSWORD;
                 return [4 /*yield*/, jsonwebtoken_1.default.sign({ id: user._id }, jwtPassword || "pepe", {
                         expiresIn: 24 * 24 * 60
                     })];
-            case 3:
+            case 4:
                 token = _c.sent();
                 res.json({
                     auth: true,
                     token: token + "|" + userSave._id
                 });
-                return [3 /*break*/, 5];
-            case 4:
+                return [3 /*break*/, 6];
+            case 5:
                 res.json({
                     auth: false,
                     error: "Error al guardar usuario"
                 });
-                _c.label = 5;
-            case 5: return [3 /*break*/, 7];
-            case 6:
+                _c.label = 6;
+            case 6: return [3 /*break*/, 8];
+            case 7:
                 res.json({
                     auth: false,
                     error: "Error, los datos son inválidos"
                 });
-                _c.label = 7;
-            case 7: return [2 /*return*/];
+                _c.label = 8;
+            case 8: return [2 /*return*/];
         }
     });
 }); };

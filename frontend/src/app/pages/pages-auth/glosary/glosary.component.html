@@ -5,7 +5,7 @@
         <p *ngFor="let i of letters" class="letter" [routerLink]="['/auth/glossary/' + glossary._id + '/' + i]" routerLinkActive="letterActive">{{i}}</p>
     </div>
     <div id="definitions">
-        <h1 *ngIf="glossary.words.length == 0">Don't have words in the letter, <br> you can add a definition</h1>
+        <h1 id="noWords" *ngIf="glossary.words.length == 0">Don't have words in the letter, <br> you can add a definition</h1>
         <div id="words" *ngIf="glossary.words.length > 0">
             <div class="word" *ngFor="let u of glossary.words">
                 <p>
