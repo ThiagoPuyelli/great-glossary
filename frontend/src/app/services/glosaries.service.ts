@@ -16,9 +16,9 @@ export class GlosariesService {
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
             const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
-            return this.http.get(environment.uri + "/glossary", {headers});
+            return this.http.get("/glossary", {headers});
         } else {
-            return this.http.get(environment.uri + "/glossary");
+            return this.http.get("/glossary");
         }
     }
 
@@ -26,9 +26,9 @@ export class GlosariesService {
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
             const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
-            return this.http.post(environment.uri + "/glossary", {title}, {headers});
+            return this.http.post("/glossary", {title}, {headers});
         } else {
-            return this.http.post(environment.uri + "/glossary", {title});
+            return this.http.post("/glossary", {title});
         }
     }
 
@@ -36,9 +36,9 @@ export class GlosariesService {
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
             const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
-            return this.http.put(environment.uri + "/glossary/" + id, {title}, {headers});
+            return this.http.put("/glossary/" + id, {title}, {headers});
         } else {
-            return this.http.put(environment.uri + "/glossary/" + id, {title});
+            return this.http.put("/glossary/" + id, {title});
         }
     }
 
@@ -46,9 +46,9 @@ export class GlosariesService {
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
             const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
-            return this.http.get(environment.uri + "/glossary/" + id + "/" + letter, {headers});
+            return this.http.get("/glossary/" + id + "/" + letter, {headers});
         } else {
-            return this.http.get(environment.uri + "/glossary/" + id + "/" + letter);
+            return this.http.get("/glossary/" + id + "/" + letter);
         }
     }
 
@@ -56,9 +56,9 @@ export class GlosariesService {
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
             const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
-            return this.http.delete(environment.uri + "/glossary/" + id, {headers});
+            return this.http.delete("/glossary/" + id, {headers});
         } else {
-            return this.http.delete(environment.uri + "/glossary/" + id);
+            return this.http.delete("/glossary/" + id);
         }
     }
 

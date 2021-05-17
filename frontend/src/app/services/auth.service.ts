@@ -16,18 +16,18 @@ export class AuthService {
    }
 
   register(body: any){
-    return this.http.post(environment.uri + "/register", body);
+    return this.http.post("/register", body);
   }
 
   login(body: any){
-    return this.http.post(environment.uri + "/login", body);
+    return this.http.post("/login", body);
   }
 
   verifyAuth(){
     const token: null|string = sessionStorage.getItem("x-access-token");
     if(token) {
       const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
-      this.http.get(environment.uri + "/verify-auth", {headers}).subscribe(
+      this.http.get("/verify-auth", {headers}).subscribe(
         (res: any) => {
           if(res.auth) {
             this.auth = true;
