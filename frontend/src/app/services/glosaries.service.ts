@@ -55,7 +55,7 @@ export class GlosariesService {
     deleteGlossary(id: string){
         const token: string|null = sessionStorage.getItem("x-access-token");
         if(token){
-            const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token);
+            const headers: HttpHeaders = new HttpHeaders().set("x-access-token", token)
             return this.http.delete("/glossary/" + id, {headers});
         } else {
             return this.http.delete("/glossary/" + id);
