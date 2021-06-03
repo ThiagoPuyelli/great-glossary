@@ -1,10 +1,6 @@
-import dotenv from "dotenv";
-dotenv.config();
+import { App } from './app'
+import { Application } from 'express'
 
-import express from "express";
-import config from "./app";
+const app: Application = new App().app
 
-const app = config(express());
-import "./database";
-
-app.listen(app.get("port"), console.log("Server connect on port " + app.get("port")))
+app.listen(app.get('port'), () => console.log('Server on port', app.get('port')))

@@ -1,16 +1,53 @@
-import { model, Schema } from "mongoose";
+import { model, Document, Schema } from 'mongoose'
+import UserInterface from '../interfaces/UserInterface'
 
-const userSchema: Schema = new Schema({
-    email: {type: String, required: true},
-    password: {type: String, required: true},
-    glossaries:{type: [{
-        title: {type: String, required: true},
-        words: {type: [{
-            word: {type: String, required: true},
-            letter: {type: String, minLength: 1, maxLength: 1},
-            definition: {type: String, required: true}
-        }], default: []}
-    }], default: []}
-});
+const userSchema = new Schema<UserInterface & Document>({
+  name: {
+    type: String,
+    required: true,
+    maxLength: 30
+  },
+  lastname: {
+    type: String,
+    required: true,
+    maxLength: 30
+  },
+  email: {
+    type: String,
+    required: true,
+    maxLength: 50
+  },
+  password: {
+    type: String,
+    required: true,
+    minLength: 4
+  },
+  glossaries: {
+    type: [{
+      title: {
+        type: String,
+        required: true,
+        maxLength: 50
+      },
+      words: {
+        type: [{
+          _id: false,
+          word: {
+            type: String,
+            required: true,
+            maxLength: 30
+          },
+          definition: {
+            type: String,
+            required: true,
+            maxLength: 400
+          }
+        }],
+        default: []
+      }
+    }],
+    default: []
+  }
+})
 
-export default model("User", userSchema);
+export default model<UserInterface>('User', userSchema)
