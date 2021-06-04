@@ -15,7 +15,8 @@ interface UserInterface {
   name: string,
   lastname: string,
   password: string,
-  glossaries: GlossaryInterface[]
+  glossaries: GlossaryInterface[],
+  comparePasswords?: Function
 }
 
 export default UserInterface

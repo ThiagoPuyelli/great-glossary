@@ -2,6 +2,13 @@ import express from 'express'
 import morgan from 'morgan'
 import mongoose from 'mongoose'
 import { config } from 'dotenv'
+import passportHttp from './passport/passport-http'
+import passportJwt from './passport/passport.jwt'
+import passport from 'passport'
+import session from 'express-session'
+
+import authRoutes from './routes/auth.routes'
+import glossaryRoutes from './routes/glossary.routes'
 config()
 
 export class App {
@@ -14,15 +21,25 @@ export class App {
     this.connectDatabase()
 
     // Middlewares
+    passportHttp()
+    passportJwt()
     config()
     this.appMiddlewares()
     this.appCors()
+    this.appRoutes()
   }
 
   appMiddlewares () {
     this.app.use(morgan('dev'))
     this.app.use(express.urlencoded({ extended: false }))
     this.app.use(express.json())
+    this.app.use(session({
+      secret: process.env.SECRET_SESSION,
+      resave: false,
+      saveUninitialized: false
+    }))
+    this.app.use(passport.initialize())
+    this.app.use(passport.session())
   }
 
   appCors () {
@@ -35,13 +52,18 @@ export class App {
     })
   }
 
+  appRoutes () {
+    this.app.use('/auth/', authRoutes)
+    this.app.use('/glossary/', glossaryRoutes)
+  }
+
   connectDatabase () {
     try {
       mongoose.connect(process.env.MONGO_URI, {
         useCreateIndex: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: true
+        useFindAndModify: false
       }, (err: Error) => {
         if (!err) {
           console.log('Database connected')
