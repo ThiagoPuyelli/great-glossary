@@ -9,6 +9,7 @@ import session from 'express-session'
 
 import authRoutes from './routes/auth.routes'
 import glossaryRoutes from './routes/glossary.routes'
+import wordRoutes from './routes/word.routes'
 config()
 
 export class App {
@@ -55,6 +56,7 @@ export class App {
   appRoutes () {
     this.app.use('/auth/', authRoutes)
     this.app.use('/glossary/', glossaryRoutes)
+    this.app.use('/word/', wordRoutes)
   }
 
   connectDatabase () {
