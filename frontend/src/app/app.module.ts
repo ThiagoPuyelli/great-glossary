@@ -16,6 +16,8 @@ import { SaveGlossaryComponent } from './pages/pages-auth/save-glossary/save-glo
 import { SaveWordComponent } from './pages/pages-auth/save-word/save-word.component';
 import { UpdateGlossaryComponent } from './pages/pages-auth/update-glossary/update-glossary.component';
 import { UpdateWordComponent } from './pages/pages-auth/update-word/update-word.component';
+import { RecoverPasswordComponent } from './pages/home/recover-password/recover-password.component';
+import { ChangePasswordComponent } from './pages/home/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { UpdateWordComponent } from './pages/pages-auth/update-word/update-word.
     SaveGlossaryComponent,
     SaveWordComponent,
     UpdateGlossaryComponent,
-    UpdateWordComponent
+    UpdateWordComponent,
+    RecoverPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

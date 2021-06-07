@@ -38,9 +38,8 @@ export class LoginComponent implements OnInit {
 
       this.authService.login({email, password}).subscribe(
         (result: any) => {
-          console.log(result)
-          if(result.auth){
-              sessionStorage.setItem("x-access-token", result.token);
+          if(result.code === 200){
+              sessionStorage.setItem("x-access-token", result.message.token);
               location.reload();
           } else {
             if(span) span.innerHTML = result.error;

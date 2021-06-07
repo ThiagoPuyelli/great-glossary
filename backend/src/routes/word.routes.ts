@@ -17,13 +17,13 @@ router.get('/:id/:letter',
     try {
       const glossary = req.body.glossary
 
-      const words = glossary.words.filter(word => word.word.charAt(0).toUpperCase() === req.params.letter)
+      glossary.words = glossary.words.filter(word => word.word.charAt(0).toUpperCase() === req.params.letter)
 
-      if (!words) {
+      if (!glossary.words) {
         return sendResponse(res, 404, 'Don\'t find words')
       }
 
-      return sendResponse(res, 200, { words })
+      return sendResponse(res, 200, { glossary })
     } catch (err) {
       return sendResponse(res, 500, err.message || 'Server error')
     }

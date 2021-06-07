@@ -1,7 +1,7 @@
 import User from '../models/User'
 import { Router } from 'express'
 import validateReq from '../middlewares/validateReq'
-import { loginUser, registerUser, modifyUser, changePassword } from '../validators/auth'
+import { registerUser, modifyUser, changePassword } from '../validators/auth'
 import sendResponse from '../utils/sendResponse'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
@@ -47,7 +47,10 @@ router.post('/sign-up', validateReq(registerUser, 'body'), async (req, res) => {
 })
 
 router.post('/sign-in',
-  validateReq(loginUser, 'body'),
+  (req, res, next) => {
+    console.log(req.headers)
+    next()
+  },
   passport.authenticate('login'),
   async (req, res) => {
     try {
@@ -107,7 +110,7 @@ router.put('/recover-password', async (req, res) => {
       from: '\'Cambio de contraseña\' <cloudinaryprueba@gmail.com>',
       to: user.email,
       subject: 'Code for recover password',
-      html: `<b>Code: ${codePassword.code}</b>`
+      html: `<b>Code: <a>${process.env.LINK_FRON + '/change-password/' + codePassword.code}</a></b>`
     })
 
     return sendResponse(res, 200, 'Mail sended')

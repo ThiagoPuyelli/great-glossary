@@ -14,13 +14,17 @@ import { SaveGlossaryComponent } from './pages/pages-auth/save-glossary/save-glo
 import { SaveWordComponent } from './pages/pages-auth/save-word/save-word.component';
 import { UpdateGlossaryComponent } from './pages/pages-auth/update-glossary/update-glossary.component';
 import { UpdateWordComponent } from './pages/pages-auth/update-word/update-word.component';
+import { RecoverPasswordComponent } from './pages/home/recover-password/recover-password.component';
+import { ChangePasswordComponent } from './pages/home/change-password/change-password.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard],
   children: [
     { path: "", component: WelcomeComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard] },
     { path: "register", component: RegisterComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard] },
-    { path: "login", component: LoginComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard] }
+    { path: "login", component: LoginComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard] },
+    { path: "recover-password", component: RecoverPasswordComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard] },
+    { path: "change-password/:code", component: ChangePasswordComponent, canLoad: [NoAuthGuard], canActivate: [NoAuthGuard] }
   ],
  },
  { path: "auth", component: HomeAuthComponent, canLoad: [AuthGuard], canActivate: [AuthGuard],

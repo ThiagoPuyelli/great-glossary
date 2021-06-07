@@ -13,6 +13,10 @@ router.get('/', passport.authenticate('token'), async (req, res) => {
       return sendResponse(res, 404, 'You don\'t have glossaries')
     }
 
+    for (const i in glossaries) {
+      glossaries[i].words = undefined
+    }
+
     return sendResponse(res, 200, { glossaries })
   } catch (err) {
     return sendResponse(res, 500, err.message || 'Server error')
@@ -26,6 +30,8 @@ router.get('/:id', passport.authenticate('token'), async (req, res) => {
     if (!glossary) {
       return sendResponse(res, 404, 'The glossary doesn\'t exist')
     }
+
+    glossary.words = undefined
 
     return sendResponse(res, 200, { glossary })
   } catch (err) {

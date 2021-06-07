@@ -10,8 +10,10 @@ import { AuthService } from "../../../services/auth.service";
 export class RegisterComponent implements OnInit {
 
   public dataForm: FormGroup = this.builder.group({
+    name: ["", [Validators.required, Validators.maxLength(30)]],
+    lastname: ["", [Validators.required, Validators.maxLength(30)]],
     email: ["", [Validators.email, Validators.required]],
-    password: ["", [Validators.required, Validators.minLength(6)]]
+    password: ["", [Validators.required, Validators.minLength(4)]]
   });
 
   constructor(
@@ -34,17 +36,13 @@ export class RegisterComponent implements OnInit {
   submitForm(){
     const span: HTMLElement|null = document.querySelector(".msgError.text");
     if(this.dataForm.status == "VALID"){
-      const { email, password } = this.dataForm.value;
-      
-
-      this.authService.register({email, password}).subscribe(
+      this.authService.register({ ...this.dataForm.value }).subscribe(
         (result: any) => {
-          console.log(result)
-          if(result.auth){
+            if(result.code === 200){
               sessionStorage.setItem("x-access-token", result.token);
               location.reload();
           } else {
-            if(span) span.innerHTML = result.error;
+            if(span) span.innerHTML = result.message;
             if(span) span.style.display = "block";
           }
         },

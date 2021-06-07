@@ -14,6 +14,7 @@ export default () => {
 
   passport.use('login', new BasicStrategy(async (email, password, done) => {
     try {
+      console.log(email, password)
       let user: any = await User.findOne({ email })
 
       if (!user) {
