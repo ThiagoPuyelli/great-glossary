@@ -24,6 +24,18 @@ const userSchema = new Schema<UserInterface & Document>({
     required: true,
     minLength: 4
   },
+  codePassword: {
+    type: {
+      code: {
+        type: String,
+        required: true
+      },
+      date: {
+        type: Number,
+        date: Date.now() + 3600000
+      }
+    }
+  },
   glossaries: {
     type: [{
       title: {

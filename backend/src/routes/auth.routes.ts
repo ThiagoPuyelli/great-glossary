@@ -1,10 +1,12 @@
 import User from '../models/User'
 import { Router } from 'express'
 import validateReq from '../middlewares/validateReq'
-import { loginUser, registerUser, modifyUser } from '../validators/auth'
+import { loginUser, registerUser, modifyUser, changePassword } from '../validators/auth'
 import sendResponse from '../utils/sendResponse'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
+import randomstring from 'randomstring'
+import mailer from '../utils/mailer'
 
 const router = Router()
 
@@ -75,5 +77,95 @@ router.put('/',
       return sendResponse(res, 500, err.message || 'Server error')
     }
   })
+
+router.put('/recover-password', async (req, res) => {
+  try {
+    const { email } = req.body
+
+    if (!email || email === '') {
+      return sendResponse(res, 404, 'The email is invalid')
+    }
+
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      return sendResponse(res, 404, 'The email is incorrect')
+    }
+
+    const codePassword = {
+      code: randomstring.generate(7),
+      date: Date.now() + 3600000
+    }
+
+    const userUpdate = await User.findOneAndUpdate({ email }, { codePassword })
+
+    if (!userUpdate) {
+      return sendResponse(res, 500, 'Error to save code')
+    }
+
+    await mailer.sendMail({
+      from: '\'Cambio de contraseña\' <cloudinaryprueba@gmail.com>',
+      to: user.email,
+      subject: 'Code for recover password',
+      html: `<b>Code: ${codePassword.code}</b>`
+    })
+
+    return sendResponse(res, 200, 'Mail sended')
+  } catch (err) {
+    return sendResponse(res, 500, err.message || 'Server error')
+  }
+})
+
+router.put('/change-password', validateReq(changePassword, 'body'), async (req, res) => {
+  try {
+    const { email, code, password } = req.body
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      return sendResponse(res, 404, 'The user doesn\'t exist')
+    }
+
+    const codePassword = user.codePassword
+
+    if (!codePassword) {
+      return sendResponse(res, 404, 'You don\'t have petition for change password')
+    }
+
+    if (codePassword.date < Date.now()) {
+      return sendResponse(res, 403, 'The code expired')
+    }
+
+    if (codePassword.code !== code) {
+      return sendResponse(res, 404, 'The code is incorrect')
+    }
+
+    user.password = password
+    user.codePassword = undefined
+
+    const userUpdate = await user.save()
+
+    if (!userUpdate) {
+      return sendResponse(res, 500, 'Error to update user')
+    }
+
+    return sendResponse(res, 200, 'Password changed')
+  } catch (err) {
+    return sendResponse(res, 500, err.message || 'Server error')
+  }
+})
+
+router.delete('/', passport.authenticate('token'), async (req, res) => {
+  try {
+    const userDeleted = await User.findByIdAndRemove(req.user._id)
+
+    if (!userDeleted) {
+      return sendResponse(res, 500, 'Error to delete user')
+    }
+
+    return sendResponse(res, 200, 'User deleted')
+  } catch (err) {
+    return sendResponse(res, 500, err.message || 'Server error')
+  }
+})
 
 export default router
