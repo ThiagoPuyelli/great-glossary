@@ -11,3 +11,9 @@ export const loginUser = joi.object({
   email: joi.string().email().required(),
   password: joi.string().required().min(4)
 })
+
+export const modifyUser = joi.object({
+  name: joi.string().max(30),
+  lastname: joi.string().max(30),
+  email: joi.string().email()
+})

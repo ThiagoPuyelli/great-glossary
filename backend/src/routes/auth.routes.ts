@@ -1,7 +1,7 @@
 import User from '../models/User'
 import { Router } from 'express'
 import validateReq from '../middlewares/validateReq'
-import { loginUser, registerUser } from '../validators/auth'
+import { loginUser, registerUser, modifyUser } from '../validators/auth'
 import sendResponse from '../utils/sendResponse'
 import jwt from 'jsonwebtoken'
 import passport from 'passport'
@@ -54,6 +54,23 @@ router.post('/sign-in',
       })
 
       return sendResponse(res, 200, { token })
+    } catch (err) {
+      return sendResponse(res, 500, err.message || 'Server error')
+    }
+  })
+
+router.put('/',
+  passport.authenticate('token'),
+  validateReq(modifyUser, 'body'),
+  async (req, res) => {
+    try {
+      const user = await User.findByIdAndUpdate(req.user._id, { ...req.body })
+
+      if (!user) {
+        return sendResponse(res, 500, 'Error to modify user')
+      }
+
+      return sendResponse(res, 200, 'User modified')
     } catch (err) {
       return sendResponse(res, 500, err.message || 'Server error')
     }
