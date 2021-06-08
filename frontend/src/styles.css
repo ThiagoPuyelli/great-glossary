@@ -75,11 +75,16 @@ body {
     transition: 300ms all;
 }
 
-@media (max-width: 356px) {
+@media (max-width: 476px) {
+    .content {
+        padding: 0px;
+    }
     .inputText,
     .label,
     .submit {
         width: 80%;
     }
-    
+    .titleForm {
+        font-size: 20px;
+    }
 }

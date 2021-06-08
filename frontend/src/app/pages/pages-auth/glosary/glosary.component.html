@@ -11,8 +11,8 @@
                 <p>
                     <b>{{u.word}}:</b> 
                     {{u.definition}}
-                    <button class="buttonModify delete" (click)="deleteWord(u._id)">X</button> 
-                    <button class="buttonModify update" [routerLink]="['/auth/update-word/' + glossary._id + '/' + u._id]">U</button>
+                    <button class="buttonModify delete" (click)="deleteWord(u.word)">X</button> 
+                    <button class="buttonModify update" [routerLink]="['/auth/update-word/' + glossary._id + '/' + u.word]">U</button>
                 </p>
             </div>
         </div>

@@ -1,13 +1,13 @@
 <div class="content">
     <h1 id="title">Glossaries</h1>
     
-    <h1 id="noGlossaries" *ngIf="glossaries.length == 0">
+    <h1 id="noGlossaries" *ngIf="!glossaries || glossaries.length == 0">
         You don't have glossaries, you can press the button for create a new glossary
     </h1>
     
-    <div id="glossaries" *ngIf="glossaries.length > 0">
+    <div id="glossaries" *ngIf="glossaries && glossaries.length > 0">
         <div class="glossaryDiv" *ngFor="let i of glossaries">
-            <div class="glossary" [routerLink]="['/auth/glossary/' + i._id + '/a']">
+            <div class="glossary" [routerLink]="['/auth/glossary/' + i._id + '/A']">
                 <p>{{i.title}}</p>
             </div>
             <button class="buttonModify delete" (click)="deleteGlossary(i._id)">X</button>

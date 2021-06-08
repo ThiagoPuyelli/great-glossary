@@ -41,7 +41,7 @@ const userSchema = new Schema<UserInterface & Document>({
       title: {
         type: String,
         required: true,
-        maxLength: 50
+        maxLength: 30
       },
       words: {
         type: [{

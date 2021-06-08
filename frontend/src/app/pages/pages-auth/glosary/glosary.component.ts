@@ -23,14 +23,13 @@ export class GlosaryComponent implements OnInit {
   ngOnInit(): void {
     this.getGlossary();
     this.addLetters();
-    setTimeout(() => console.log(this.glossary), 500)
   }
 
   getGlossary(){
     this.route.params.subscribe(
       params => {
         this.glossService.getGlossary(params.id, params.letter).subscribe(
-          glossary => this.glossary = glossary,
+          (response: any) => this.glossary = response.message.glossary,
           err => console.log(err)
         )
         this.letter = params.letter;
@@ -40,7 +39,7 @@ export class GlosaryComponent implements OnInit {
   }
 
   addLetters(){
-    var lettersString: string = "abcdefghijklmnñopqrstuvwxyz";
+    var lettersString: string = ("abcdefghijklmnñopqrstuvwxyz").toUpperCase();
     this.letters = lettersString.split("");
   }
 

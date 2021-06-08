@@ -37,13 +37,13 @@ export class SaveWordComponent implements OnInit {
       const { word, definition } = this.dataForm.value;
       this.woService.saveWord(this.glossaryID, {word, definition}).subscribe(
         (res: any) => {
-          if(res.error){
+          if(res.code > 200){
             if(span) span.style.display = "block";
           } else {
-            this.router.navigate(["/auth/glossary/" + this.glossaryID + "/a"])
+            this.router.navigate(["/auth/glossary/" + this.glossaryID + "/A"])
           }
         },
-        err => {if(span) span.style.display = "block"}
+        err => {if(span) span.style.display = "block"; console.log(err)}
       )
     } else {
       if(span) span.style.display = "block";

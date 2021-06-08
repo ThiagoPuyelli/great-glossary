@@ -2,14 +2,14 @@
     <h1 class="titleForm">Register</h1>
     <form class="form" [formGroup]="dataForm" (submit)="submitForm()">
         <label class="label">Name</label>
-        <input type="text" class="inputText" placeholder="Name" formControlName="name">
+        <input type="text" class="inputText" maxlength="30" placeholder="Name" formControlName="name">
         <label class="label">Lastname</label>
-        <input type="text" class="inputText" placeholder="Lastname" formControlName="lastname">
+        <input type="text" class="inputText" maxlength="30" placeholder="Lastname" formControlName="lastname">
         <label class="label">Email</label>
-        <input type="email" class="inputText" placeholder="Email" formControlName="email">
+        <input type="email" class="inputText" maxlength="50" placeholder="Email" formControlName="email">
         <label class="label">Password</label>
         <input type="password" (change)="verifyLength()" class="inputText" placeholder="Password" formControlName="password">
-        <span class="msgError password">Minimum 6 characters required</span>
+        <span class="msgError password">Minimum 4 characters required</span>
         <span class="msgError text">Email or Password is failed</span>
         <button type="submit" class="submit">Submit</button>
     </form>

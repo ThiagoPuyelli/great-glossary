@@ -2,9 +2,9 @@
     <h1>Save word</h1>
     <form class="form" [formGroup]="dataForm" (submit)="submitForm()">
         <label class="label">Word</label>
-        <input type="text" class="inputText" placeholder="Word" formControlName="word">
+        <input type="text" class="inputText" placeholder="Word" maxlength="30" formControlName="word">
         <label class="label">Definition</label>
-        <input type="text" class="inputText" placeholder="Definition" formControlName="definition"> 
+        <input type="text" class="inputText" placeholder="Definition" maxlength="400" formControlName="definition"> 
         <span class="msgError">The information is invalid</span>
         <button type="submit" class="submit">Submit</button>
     </form>

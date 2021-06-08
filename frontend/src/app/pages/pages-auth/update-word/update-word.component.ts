@@ -32,8 +32,8 @@ export class UpdateWordComponent implements OnInit {
         this.glossaryID = params.id;
         this.wordID = params.wordID;
         this.woService.getWord(this.glossaryID, this.wordID).subscribe(
-          word => {
-            this.word = word;
+          (response: any) => {
+            this.word = response.message.word;
             this.setInputs();
           },
           err => console.log(err)
@@ -57,7 +57,7 @@ export class UpdateWordComponent implements OnInit {
           if(res.error){
             if(span) span.style.display = "block";
           } else {
-            this.router.navigate(["/auth/glossary/" + this.glossaryID + "/a"])
+            this.router.navigate(["/auth/glossary/" + this.glossaryID + "/A"])
           }
         },
         err => {if(span) span.style.display = "block"}

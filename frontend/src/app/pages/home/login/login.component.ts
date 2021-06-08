@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   verifyLength(){
     const span: HTMLElement|null = document.querySelector(".msgError.password");
-    if(this.dataForm.value.password.length < 6){
+    if(this.dataForm.value.password.length < 4){
       if(span) span.style.display = "block";
     } else {
       if(span) span.style.display = "none";

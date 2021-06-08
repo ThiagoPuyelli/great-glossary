@@ -21,7 +21,7 @@ export class GlosariesComponent implements OnInit {
 
   getGlosaries(){
     this.glosariesService.getGlosaries().subscribe(
-      (glossaries: any) => this.glossaries = glossaries,
+      (response: any) => this.glossaries = response.message.glossaries,
       err => console.log(err)
     )
   }

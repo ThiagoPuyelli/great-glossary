@@ -32,9 +32,10 @@ export class UpdateGlossaryComponent implements OnInit {
     const titleValue: any = document.querySelector("#titleInput");
     const span: HTMLElement|null = document.querySelector(".msgError");
     if(titleValue && titleValue.value != ""){
+      console.log(titleValue.value, this.glossaryID)
       this.glossService.updateGlossary(titleValue.value, this.glossaryID).subscribe(
         (res: any) => {
-          if(res.error){
+          if(res.code > 200){
             if(span) span.style.display = "block";
           } else {
             this.router.navigate(["/auth"]);
