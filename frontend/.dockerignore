@@ -1,0 +1,13 @@
+/node_modules
+
+/dist
+
+.git
+
+.editorconfig
+
+/e2e
+
+.gitignore
+
+*.md
